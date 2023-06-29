@@ -18,6 +18,17 @@ app.get('/api/v1/tours', (req, res) => {
   });
 });
 
+app.get('/api/v1/tours/:id', (req, res) => {
+  const id = +req.params.id;
+  const tour = tours.find((tour) => tour.id === id);
+
+  if (!tour) {
+    return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
+  }
+
+  res.status(200).json({ status: 'success', data: { tour } });
+});
+
 app.post('/api/v1/tours', (req, res) => {
   const newId = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: newId }, req.body);
@@ -43,4 +54,4 @@ app.listen(port, () => {
   console.log(`App running on port ${port}`);
 });
 
-// nastavi od 54. Responding to URL Parameters
+// nastavi od 55. Handling PATCH Requests
